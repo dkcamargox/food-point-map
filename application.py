@@ -22,6 +22,16 @@ def after_request(response):
 # Configure CS50 Library to use SQLite database
 db = SQL(getenv('DATABASE_URL'))
 
+
+db.execute(
+    f'CREATE TABLE IF NOT EXISTS "food_points" ( 
+        "id" INTEGER NOT NULL UNIQUE, 
+        "latitude" REAL NOT NULL, 
+        "longitude" REAL NOT NULL, 
+        PRIMARY KEY("id") );'
+)
+
+
 @app.route('/')
 def index():
     """Show map with the Food Points"""
