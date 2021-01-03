@@ -20,7 +20,7 @@ def after_request(response):
 
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///project.db")
+db = SQL(getenv('DATABASE_URL'))
 
 @app.route('/')
 def index():
