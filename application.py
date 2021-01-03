@@ -1,12 +1,12 @@
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
-from os import getenv
+from os import getenv, environ
 
 # Configure app
 app = Flask(__name__)
 app.secret_key = getenv('SECRET_KEY')
-port = int(os.environ.get("PORT", 5000))
+port = int(environ.get("PORT", 5000))
 app.run(host="0.0.0.0", port=port)
 
 # Ensure templates are auto-reloaded
@@ -20,18 +20,12 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-
 # Configure CS50 Library to use SQLite database
 db = SQL(getenv('DATABASE_URL'))
 
 
 db.execute(
-    f'CREATE TABLE IF NOT EXISTS "food_points" ( 
-        "id" INTEGER NOT NULL UNIQUE, 
-        "latitude" REAL NOT NULL, 
-        "longitude" REAL NOT NULL, 
-        PRIMARY KEY("id") );'
-)
+    f'CREATE TABLE IF NOT EXISTS "food_points"("id" INTEGER NOT NULL UNIQUE, "latitude" REAL NOT NULL, "longitude" REAL NOT NULL, PRIMARY KEY("id") );')
 
 
 @app.route('/')
@@ -40,7 +34,6 @@ def index():
     food_points = db.execute(
         'SELECT * FROM food_points;'
     )
-    print(food_points)
 
     return render_template('home.html', food_points=food_points)
 
