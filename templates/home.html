@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block css %}
+    <link type="text/css" href="static/css/home.css?v=1.1" rel="stylesheet">
+{% endblock css %}
+
+{% block js %}
+    <script type="text/javascript" src="static/javascript/home.js"></script>
+    <script>
+        main({{ food_points|tojson }})
+    </script>
+{% endblock js %}
+
+{% block body %}
+    <main>
+        <div class="btn-wrap">
+            <h2 class="map-title">Find Food Points in Corrientes</h2>
+            <a href="/add" class="btn btn-primary btn-lg float-top-right"> Add Faulting Food Point</a>
+        </div>
+        <div id="mapid"></div>
+    </main>
+{% endblock body %}
